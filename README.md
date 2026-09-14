@@ -8,7 +8,6 @@ heating to amber, swapping hot, and cooling into a settled quartz layer.
 Sorting first, then pathfinding, all narrated as a scroll-driven film in
 vanilla JavaScript, HTML, and CSS. Zero dependencies.
 
-![Hero — hold the slab and raw values settle into sorted order](assets/hero-settled.png)
 
 ## What it is
 
@@ -36,8 +35,6 @@ runs down a single scroll:
 Algorithms are pure functions. Rendering is a smoke-and-mirrors layer on
 top. The entire narrative bends around scroll position using CSS-native
 scroll-driven animations — no timers, no step-throughs, no canvas.
-
-![Bubble sort — one pass, compare amber rising to a settle](assets/sortact-bubble.png)
 
 ## Features
 
@@ -89,8 +86,6 @@ queue. On this maze it finds a route quickly but not a short one: a
 narration admits: DFS finds *a* path, never the pledge of the shortest.
 
 The amber path draw is the payoff in every section.
-
-![A* — the frontier tilts toward the goal and prunes whole pockets](assets/path-astar.png)
 
 ## What's interesting about this project
 
