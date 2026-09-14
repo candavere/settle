@@ -150,7 +150,7 @@ function check(label, ok, detail = '') {
     check('DFS dives instead of flooding on this maze', correctness.dfsVisited < 323,
         `dfs visited=${correctness.dfsVisited}`);
 
-    await page.screenshot({ path: '/tmp/sortviz-dfs-default.png' });
+    await page.screenshot({ path: '/tmp/settle-dfs-default.png' });
 
     check('no console/page errors', errors.length === 0, errors.join(' | '));
     await page.close();
@@ -195,7 +195,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-dfs').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-dfs-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-dfs-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

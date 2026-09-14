@@ -83,7 +83,7 @@ function check(label, ok, detail = '') {
     check('no pin element in section', css.noPinInSection);
     check('narration step reveals on scroll', css.stepOp > 0.8, `opacity ${css.stepOp}`);
 
-    await page.screenshot({ path: '/tmp/sortviz-insertion-default.png' });
+    await page.screenshot({ path: '/tmp/settle-insertion-default.png' });
 
     // Compute the insertion steps and verify contract + prefix-growth semantics
     const data = await page.evaluate(() => {
@@ -118,7 +118,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-insertion').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-insertion-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-insertion-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

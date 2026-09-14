@@ -86,7 +86,7 @@ function check(label, ok, detail = '') {
     check('shard animation bound', css.shardAnim === 'merge-shard-0', css.shardAnim);
     check('suture animation bound', css.sutureAnim === 'merge-suture-move', css.sutureAnim);
 
-    await page.screenshot({ path: '/tmp/sortviz-merge-default.png' });
+    await page.screenshot({ path: '/tmp/settle-merge-default.png' });
 
     // Merge steps replay as overwrites -> sorted
     const data = await page.evaluate(() => {
@@ -150,7 +150,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-merge').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-merge-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-merge-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

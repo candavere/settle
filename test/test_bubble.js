@@ -85,7 +85,7 @@ function check(label, ok, detail = '') {
 
     // Scroll-driven reveal: knob is bound to its swing timeline and the first
     // narration step rises above its resting 0.45 opacity once in view.
-    await page.screenshot({ path: '/tmp/sortviz-bubble-default.png' });
+    await page.screenshot({ path: '/tmp/settle-bubble-default.png' });
     await page.mouse.move(720, 450);
     await page.mouse.wheel(0, 8000);
     await page.waitForTimeout(500);
@@ -121,6 +121,76 @@ function check(label, ok, detail = '') {
     check('bubble sort produces sorted array', bubbleData.arraySorted);
     check('final step marks index 0 sorted', bubbleData.lastSorted);
 
+    // --- Regression: click-to-play must not override the scroll timeline once
+    // the user scrolls (the play used to keep running its own 3s clock,
+    // rendering sorted-looking shards at an early scroll position). ---
+    const interference = await page.evaluate(async () => {
+        const section = document.getElementById('section-bubble');
+        const field = document.getElementById('bubble-field');
+        const heights = Array.from(field.children).map(b => parseFloat(getComputedStyle(b).height));
+        const maxH = Math.max(...heights);
+        const vals = heights.map(h => Math.round((h / maxH) * 10000) / 100);
+        const steps = window.bubbleSort([...vals]);
+
+        // reference model: each snapshot is the occupying shard per slot
+        const model = vals.map((_, i) => i);
+        const snaps = [model.slice()];
+        steps.forEach(s => {
+            if (s.type === 'swap') { const t = model[s.i]; model[s.i] = model[s.j]; model[s.j] = t; }
+            snaps.push(model.slice());
+        });
+
+        // measure the slot pitch the animation was generated with
+        const fRect = field.getBoundingClientRect();
+        const gap = parseFloat(getComputedStyle(field).gap) || 0;
+        const n = field.children.length;
+        const slot = (fRect.width - gap * (n - 1)) / n + gap;
+
+        // click the stage (start a replay) then scroll toward the START edge of
+        // the section's bound range, well before any play would have finished
+        const stage = section.querySelector('.shard-stage');
+        stage.click();
+        await new Promise(r => setTimeout(r, 200));
+
+        // the authoritative scroll range is bound inline on each shard
+        const range = field.children[0].style.animationRange.match(/([\d.]+)%\s+([\d.]+)%/);
+        const start = parseFloat(range[1]) / 100;
+        const end = parseFloat(range[2]) / 100;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const earlyY = (start + 0.05 * (end - start)) * maxScroll;
+        window.scrollTo(0, earlyY);
+        await new Promise(r => setTimeout(r, 300));
+
+        const st = window.NarrativeController.getPlayState('bubble');
+        const shards = Array.from(field.children).map((bar, col) => {
+            const m = /matrix\(([^)]*)\)/.exec(getComputedStyle(bar).transform);
+            const p = m ? m[1].split(',').map(x => parseFloat(x)) : null;
+            const tx = p ? p[4] : 0;
+            return col + (tx / slot);
+        });
+
+        // find which model snapshot (if any) the rendered arrangement matches
+        let best = null;
+        snaps.forEach((snap, k) => {
+            const worst = Math.max(...shards.map((pos, shard) => Math.abs(pos - snap.indexOf(shard))));
+            if (!best || worst < best.worst) best = { step: k, worst };
+        });
+
+        const frac = Math.max(0, Math.min(1, (window.scrollY / maxScroll - start) / (end - start) || 0));
+        const expected = Math.round(frac * steps.length);
+        return {
+            running: st.running,
+            finished: st.finished,
+            bestStep: best.step,
+            worst: best.worst,
+            expectedStep: expected,
+            totalSteps: steps.length,
+        };
+    });
+    check('running play cancelled by scroll', interference.running === false && interference.finished === false, JSON.stringify(interference));
+    check('shards match a real model arrangement', interference.worst < 0.75, JSON.stringify(interference));
+    check('early scroll shows an early pass, not the sorted final', Math.abs(interference.bestStep - interference.expectedStep) <= 1, JSON.stringify(interference));
+
     // Other sections untouched: quick now uses Act II shard styling, not the
     // old viz-bar prototype
     const untouched = await page.evaluate(() => {
@@ -155,7 +225,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-bubble').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-bubble-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-bubble-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
         await p.close();
     }

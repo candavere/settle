@@ -159,7 +159,7 @@ function check(label, ok, detail = '') {
         `astar=${correctness.astarPathLen} bfs=${correctness.bfsPathLen}`);
     check('path length > 0', correctness.astarPathLen > 0, String(correctness.astarPathLen));
 
-    await page.screenshot({ path: '/tmp/sortviz-astar-default.png' });
+    await page.screenshot({ path: '/tmp/settle-astar-default.png' });
 
     check('no console/page errors', errors.length === 0, errors.join(' | '));
     await page.close();
@@ -236,7 +236,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-astar').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-astar-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-astar-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

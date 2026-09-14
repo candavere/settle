@@ -1,5 +1,5 @@
 /**
- * SortViz Narrative Controller
+ * settle Narrative Controller
  * Handles scroll-driven animations for algorithm visualizations
  */
 
@@ -1888,9 +1888,10 @@ function triggerClickToPlay(spec) {
     setTimeout(() => finishClickToPlay(spec), CLICK_PLAY_MS);
 }
 
-/* When the click play ends: if the user scrolled after clicking (scroll
-   becomes the most recent trigger) or the section left the viewport, cancel
-   so the scroll-driven animation (or the static settled field) takes over.
+/* When the click play's clock runs out: if a scroll already took over
+   (spec.superseded, cancelClickToPlay already unhooked the play) or the
+   section left the viewport, make sure nothing holds a stale fill and the
+   scroll-driven animation (or the static settled field) drives again.
    Otherwise hold the finished fill so the result stays visible until the
    user scrolls it. */
 function finishClickToPlay(spec) {
@@ -1933,8 +1934,11 @@ function bindAllClickToPlay() {
 }
 
 /* Most-recent-trigger-wins: a scroll event after a click makes scroll the
-   active driver again — finish the current play without holding its fill,
-   or cancel a finished one so the section tracks scroll position again. */
+   active driver again. A running play is cancelled immediately so the
+   shards never keep following the play clock after the user scrolls —
+   the play's late frames would otherwise render a sorted-looking state at
+   an early scroll position until the play timed out. A finished play's
+   held fill is likewise cancelled so the section tracks scroll again. */
 let playbackScrollTick = false;
 function setupPlaybackScrollReset() {
     window.addEventListener('scroll', () => {
@@ -1945,6 +1949,9 @@ function setupPlaybackScrollReset() {
             NarrativeState.playback.forEach(spec => {
                 if (spec.running) {
                     spec.superseded = true;
+                    cancelClickToPlay(spec);
+                    spec.section.classList.remove('is-playing');
+                    restoreStaticSettled(spec);
                     return;
                 }
                 if (spec.finished) {

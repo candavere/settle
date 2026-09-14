@@ -138,7 +138,7 @@ function check(label, ok, detail = '') {
     check('seed becomes visible', motion.seedMax > 0.9, `max opacity ${motion.seedMax}`);
     check('title rises to full opacity', motion.titleMax > 0.9, `max opacity ${motion.titleMax}`);
 
-    await page.screenshot({ path: '/tmp/sortviz-footer-converged.png' });
+    await page.screenshot({ path: '/tmp/settle-footer-converged.png' });
 
     check('no console/page errors', errors.length === 0, errors.join(' | '));
     await page.close();
@@ -169,7 +169,7 @@ function check(label, ok, detail = '') {
             check('mobile: copy shows settled (no animation trapping)', mob.titleOpacity === '1', mob.titleOpacity);
             check('mobile: seed visible', mob.seedOpacity === '1', mob.seedOpacity);
             check('mobile: title readable', mob.titleFontSize >= 24, `font-size ${mob.titleFontSize}px`);
-            await p.screenshot({ path: '/tmp/sortviz-footer-mobile-settled.png' });
+            await p.screenshot({ path: '/tmp/settle-footer-mobile-settled.png' });
         }
         await p.close();
     }

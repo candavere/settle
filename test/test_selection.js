@@ -86,7 +86,7 @@ function check(label, ok, detail = '') {
     check('pin bound to fly timeline', css.pinAnim.includes('selection-minpin-move'), css.pinAnim);
     check('narration step reveals on scroll', css.stepOp > 0.8, `opacity ${css.stepOp}`);
 
-    await page.screenshot({ path: '/tmp/sortviz-selection-default.png' });
+    await page.screenshot({ path: '/tmp/settle-selection-default.png' });
 
     // Compute the selection steps and make sure the sort contract is sound
     const data = await page.evaluate(() => {
@@ -118,7 +118,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-selection').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-selection-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-selection-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

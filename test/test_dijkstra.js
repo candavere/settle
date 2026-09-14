@@ -155,7 +155,7 @@ function check(label, ok, detail = '') {
     check('Dijkstra visited order === BFS visited order', correctness.sameVisitedOrder);
     check('Dijkstra path === BFS path (reduces to BFS on unweighted grid)', correctness.samePath);
 
-    await page.screenshot({ path: '/tmp/sortviz-dijkstra-default.png' });
+    await page.screenshot({ path: '/tmp/settle-dijkstra-default.png' });
 
     check('no console/page errors', errors.length === 0, errors.join(' | '));
     await page.close();
@@ -200,7 +200,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-dijkstra').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-dijkstra-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-dijkstra-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

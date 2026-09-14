@@ -92,7 +92,7 @@ function check(label, ok, detail = '') {
     check('crown animation bound', css.crownAnim === 'quick-crown-move', css.crownAnim);
     check('bound animation bound', css.boundAnim === 'quick-bound-move', css.boundAnim);
 
-    await page.screenshot({ path: '/tmp/sortviz-quick-default.png' });
+    await page.screenshot({ path: '/tmp/settle-quick-default.png' });
 
     // Quick steps replay as swaps -> sorted
     const data = await page.evaluate(() => {
@@ -161,7 +161,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-quick').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-quick-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-quick-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

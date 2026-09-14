@@ -154,7 +154,7 @@ function check(label, ok, detail = '') {
     check('visited length > path length', correctness.visitedLength > correctness.pathLength,
         `visited=${correctness.visitedLength} path=${correctness.pathLength}`);
 
-    await page.screenshot({ path: '/tmp/sortviz-bfs-default.png' });
+    await page.screenshot({ path: '/tmp/settle-bfs-default.png' });
 
     check('no console/page errors', errors.length === 0, errors.join(' | '));
     await page.close();
@@ -199,7 +199,7 @@ function check(label, ok, detail = '') {
         await p.locator('#section-bfs').scrollIntoViewIfNeeded();
         await p.waitForTimeout(300);
         const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        if (vp.width === 390) await p.screenshot({ path: '/tmp/sortviz-bfs-mobile.png' });
+        if (vp.width === 390) await p.screenshot({ path: '/tmp/settle-bfs-mobile.png' });
         check(`no horizontal overflow @${vp.width}`, over <= 0, `scrollWidth delta ${over}`);
 
         if (vp.width === 390) {

@@ -169,7 +169,7 @@ function check(label, ok, detail = '') {
     check('Enter crystallizes', kb === 'STATE: SETTLED', kb);
 
     check('no console/page errors', errors.length === 0, errors.join(' | '));
-    await page.screenshot({ path: '/tmp/sortviz-hero-default.png' });
+    await page.screenshot({ path: '/tmp/settle-hero-default.png' });
     await page.close();
 
     // --- Reduced motion: static narrative fallback (no dashboard) ---
@@ -221,7 +221,7 @@ function check(label, ok, detail = '') {
         slabH: getComputedStyle(document.getElementById('hero-slab')).height,
     }));
     check('mobile: single column', mobGrid.cols === 1, String(mobGrid.cols));
-    await mob.screenshot({ path: '/tmp/sortviz-hero-mobile.png' });
+    await mob.screenshot({ path: '/tmp/settle-hero-mobile.png' });
 
     // Mobile: settle then spread — no overflow, layers contained
     const slabBoxM = await mob.locator('#hero-slab').boundingBox();
