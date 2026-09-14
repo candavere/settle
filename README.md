@@ -1,3 +1,4 @@
+![Tests](https://github.com/candavere/settle/actions/workflows/test.yml/badge.svg)
 # settle
 
 **A scroll-driven algorithm visualizer where sorting and pathfinding crystallize in place as you scroll.**
