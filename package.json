@@ -1,0 +1,16 @@
+{
+  "name": "sortviz",
+  "version": "1.0.0",
+  "description": "Watch sorting and pathfinding algorithms come to life with real-time animations.",
+  "main": "narrative.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

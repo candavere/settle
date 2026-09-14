@@ -1,0 +1,32 @@
+# OS noise
+.DS_Store
+._*
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local agent tooling (installed skills, personal config, scratch)
+.agents/
+.claude/
+.codex/
+agent/
+skills-lock.json
+
+# Playwright — dev-only test tooling
+node_modules/
+.playwright/
+playwright-report/
+test-results/
+
+# Progress Files
+progress_log.md
+progress_queue.md
+
+# Direction files
+SPEC.md
+AGENTS.md

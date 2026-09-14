@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortViz - Algorithm Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="sorting/bubble.js"></script>
+    <script src="sorting/selection.js"></script>
+    <script src="sorting/insertion.js"></script>
+    <script src="sorting/merge.js"></script>
+    <script src="sorting/quick.js"></script>
+    <script src="pathfinding/common.js"></script>
+    <script src="pathfinding/bfs.js"></script>
+    <script src="pathfinding/dfs.js"></script>
+    <script src="pathfinding/dijkstra.js"></script>
+    <script src="pathfinding/astar.js"></script>
+    <script src="narrative.js" defer></script>
+</head>
+<body>
+    <main class="app-main">
+        <!-- Narrative Scroll Sections -->
+        <section class="narrative" id="narrative">
+            <!-- Hero: the geode -->
+            <section class="narrative-hero" id="narrative-hero">
+                <div class="geode-hero">
+                    <div class="geode-copy">
+                        <p class="geode-wordmark">
+                            <span class="geode-seed" aria-hidden="true"></span>
+                            SortViz
+                        </p>
+                        <h2 class="geode-title">Order is hiding<br>in the noise.</h2>
+                        <p class="geode-sub">Hold the slab and watch raw values settle into sorted order. Then read how each one thinks.</p>
+                        <div class="geode-cta">
+                            <button type="button" class="geode-cta-btn" id="btn-crystallize">Crystallize</button>
+                        </div>
+                        </div>
+
+                    <div class="geode-stage">
+                        <div class="geode-slab"
+                            id="hero-slab"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Array of unsorted values. Hold the slab or press Enter to settle them into sorted order.">
+                            <span class="geode-hint" aria-hidden="true">HOLD TO SETTLE</span>
+                            <span class="geode-open-hint" aria-hidden="true">TAP TO OPEN</span>
+                            <svg class="geode-crack" viewBox="0 0 640 400" preserveAspectRatio="none" aria-hidden="true">
+                                <path class="geode-crack-path"
+                                    pathLength="1"
+                                    d="M 0 92 L 96 84 L 150 118 L 246 76 L 318 108 L 402 82 L 492 120 L 560 90 L 640 98"/>
+                            </svg>
+                            <span class="geode-field" id="hero-field" aria-hidden="true"></span>
+                            <span class="geode-vein" aria-hidden="true"></span>
+                            <span class="geode-sheets" aria-hidden="true">
+                                <i class="geode-sheet geode-sheet--1"></i>
+                                <i class="geode-sheet geode-sheet--2"></i>
+                                <i class="geode-sheet geode-sheet--3"></i>
+                                <i class="geode-sheet geode-sheet--4"></i>
+                            </span>
+                        </div>
+                        <p class="geode-status" id="hero-status" aria-live="polite">STATE: RAW</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act I: Bubble Sort -->
+            <section class="algorithm-section algorithm-section--act-i algorithm-section--bubble" id="section-bubble" data-algorithm="bubble">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="Bubble sort narration">
+                        <h3 class="algorithm-name">Bubble Sort</h3>
+                        <p class="algorithm-desc">Adjacent elements compare and swap. Pass by pass the heaviest value settles at the far edge and stays.</p>
+                        <div class="narration-steps" id="narration-bubble"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="Bubble sort visualization">
+                        <div class="shard-stage" role="button" tabindex="0" aria-label="Play bubble sort animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="shard-field" id="bubble-field"></span>
+                            <span class="bubble-knob" id="bubble-knob" aria-hidden="true"></span>
+                        </div>
+                        <p class="shard-status">Act I &middot; pass by pass the heaviest takes the far edge</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act I: Selection Sort -->
+            <section class="algorithm-section algorithm-section--act-i algorithm-section--selection" id="section-selection" data-algorithm="selection">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="Selection sort narration">
+                        <h3 class="algorithm-name">Selection Sort</h3>
+                        <p class="algorithm-desc">Scan the unsorted region for its minimum. Walk it forward to the sorted floor and lock it in.</p>
+                        <div class="narration-steps" id="narration-selection"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="Selection sort visualization">
+                        <div class="shard-stage" role="button" tabindex="0" aria-label="Play selection sort animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="shard-field" id="selection-field"></span>
+                            <span class="selection-minpin" id="selection-minpin" aria-hidden="true"></span>
+                        </div>
+                        <p class="shard-status">Act I &middot; the minimum walks forward into the sorted floor</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act I: Insertion Sort -->
+            <section class="algorithm-section algorithm-section--act-i algorithm-section--insertion" id="section-insertion" data-algorithm="insertion">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="Insertion sort narration">
+                        <h3 class="algorithm-name">Insertion Sort</h3>
+                        <p class="algorithm-desc">Lift the first unsorted element as a key. Slide it left past larger values until it drops home.</p>
+                        <div class="narration-steps" id="narration-insertion"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="Insertion sort visualization">
+                        <div class="shard-stage" role="button" tabindex="0" aria-label="Play insertion sort animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="shard-field" id="insertion-field"></span>
+                        </div>
+                        <p class="shard-status">Act I &middot; each key slides home into sorted order</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act II: Merge Sort -->
+            <section class="algorithm-section algorithm-section--actii algorithm-section--merge" id="section-merge" data-algorithm="merge">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="Merge sort narration">
+                        <h3 class="algorithm-name">Merge Sort</h3>
+                        <p class="algorithm-desc">Split the array in half, down to single elements. Then fold the halves back together, lifting the smaller front into each merged slot.</p>
+                        <div class="narration-steps" id="narration-merge"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="Merge sort visualization">
+                        <div class="shard-stage" role="button" tabindex="0" aria-label="Play merge sort animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="merge-suture" id="merge-suture" aria-hidden="true"></span>
+                            <span class="shard-field" id="merge-field"></span>
+                        </div>
+                        <p class="shard-status">Act II &middot; halves divide, then remerge in order</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act II: Quick Sort -->
+            <section class="algorithm-section algorithm-section--actii algorithm-section--quick" id="section-quick" data-algorithm="quick">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="Quick sort narration">
+                        <h3 class="algorithm-name">Quick Sort</h3>
+                        <p class="algorithm-desc">Lift a pivot. Everything smaller slides left of a moving boundary, everything bigger stays right. Drop the pivot into its final slot, then go again on both sides.</p>
+                        <div class="narration-steps" id="narration-quick"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="Quick sort visualization">
+                        <div class="shard-stage" role="button" tabindex="0" aria-label="Play quick sort animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="quick-bound" id="quick-bound" aria-hidden="true"></span>
+                            <span class="quick-crown" id="quick-crown" aria-hidden="true"></span>
+                            <span class="shard-field" id="quick-field"></span>
+                        </div>
+                        <p class="shard-status">Act II &middot; the pivot crowns its final slot</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act III: BFS -->
+            <section class="algorithm-section algorithm-section--actiii algorithm-section--path algorithm-section--bfs" id="section-bfs" data-algorithm="bfs">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="BFS narration">
+                        <h3 class="algorithm-name">Breadth-First Search</h3>
+                        <p class="algorithm-desc">Explore layer by layer, ring by ring. The wavefront guarantees the shortest path in an unweighted grid.</p>
+                        <div class="narration-steps" id="narration-bfs"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="BFS visualization">
+                        <div class="grid-stage" role="button" tabindex="0" aria-label="Play breadth-first search animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="grid-halo" id="bfs-halo"></span>
+                            <span class="grid-field" id="bfs-field"></span>
+                        </div>
+                        <p class="shard-status">Act III &middot; the wavefront radiates ring by ring, then the path threads home</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act III: A* -->
+            <section class="algorithm-section algorithm-section--actiii algorithm-section--path algorithm-section--astar" id="section-astar" data-algorithm="astar">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="A* narration">
+                        <h3 class="algorithm-name">A* Search</h3>
+                        <p class="algorithm-desc">A heuristic tips the frontier toward the goal. It prunes the dead-end pockets BFS floods, then walks the same shortest path home.</p>
+                        <div class="narration-steps" id="narration-astar"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="A* visualization">
+                        <div class="grid-stage" role="button" tabindex="0" aria-label="Play A* search animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="astar-tilt" id="astar-tilt"></span>
+                            <span class="grid-field" id="astar-field"></span>
+                        </div>
+                        <p class="shard-status">Act III &middot; the frontier leans toward the goal and prunes whole pockets</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act III: DFS -->
+            <section class="algorithm-section algorithm-section--actiii algorithm-section--path algorithm-section--dfs" id="section-dfs" data-algorithm="dfs">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="DFS narration">
+                        <h3 class="algorithm-name">Depth-First Search</h3>
+                        <p class="algorithm-desc">Dive down one branch as far as it goes before backtracking. It finds a route quickly, but nothing guarantees it is the shortest.</p>
+                        <div class="narration-steps" id="narration-dfs"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="DFS visualization">
+                        <div class="grid-stage" role="button" tabindex="0" aria-label="Play depth-first search animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="grid-field" id="dfs-field"></span>
+                        </div>
+                        <p class="shard-status">Act III &middot; the search dives deep along one branch, then backtracks</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Act III: Dijkstra -->
+            <section class="algorithm-section algorithm-section--actiii algorithm-section--path algorithm-section--dijkstra" id="section-dijkstra" data-algorithm="dijkstra">
+                <div class="section-inner">
+                    <div class="narration-panel" role="complementary" aria-label="Dijkstra narration">
+                        <h3 class="algorithm-name">Dijkstra</h3>
+                        <p class="algorithm-desc">Expand the cheapest unvisited cell every step. It guarantees the shortest path — on an unweighted grid that reduces to BFS.</p>
+                        <div class="narration-steps" id="narration-dijkstra"></div>
+                    </div>
+                    <div class="viz-panel" aria-label="Dijkstra visualization">
+                        <div class="grid-stage" role="button" tabindex="0" aria-label="Play Dijkstra animation">
+                            <span class="play-hint" aria-hidden="true">CLICK TO PLAY</span>
+                            <span class="grid-field" id="dijkstra-field"></span>
+                        </div>
+                        <p class="shard-status">Act III &middot; the cheapest path relaxes outward and settles in</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer: the formation settles -->
+            <footer class="narrative-footer" id="narrative-footer">
+                <div class="footer-stage">
+                    <svg class="footer-veins" viewBox="0 0 1200 640" preserveAspectRatio="none" aria-hidden="true">
+                        <path class="footer-vein footer-vein--a" pathLength="1" d="M -40 40 L 320 130 L 590 200"/>
+                        <path class="footer-vein footer-vein--b" pathLength="1" d="M -40 300 L 350 230 L 594 202"/>
+                        <path class="footer-vein footer-vein--c" pathLength="1" d="M -40 580 L 370 360 L 598 204"/>
+                        <path class="footer-vein footer-vein--d" pathLength="1" d="M 1240 40 L 880 130 L 610 200"/>
+                        <path class="footer-vein footer-vein--e" pathLength="1" d="M 1240 300 L 850 230 L 606 202"/>
+                        <path class="footer-vein footer-vein--f" pathLength="1" d="M 1240 580 L 830 360 L 602 204"/>
+                    </svg>
+                    <span class="footer-seed" aria-hidden="true"></span>
+                    <div class="footer-copy">
+                        <p class="footer-wordmark">
+                            <span class="footer-mark" aria-hidden="true"></span>
+                            SortViz
+                        </p>
+                        <h2 class="footer-title">Veins converge<br>into stillness.</h2>
+                        <p class="footer-sub">Every sort lands its slot. Every search threads home. This is where the geode stops forming.</p>
+                        <p class="footer-status">STATE: SETTLED</p>
+                        <nav class="footer-links" aria-label="Project links">
+                            <a href="https://github.com/candavere/sortviz" id="footer-github" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </nav>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </main>
+</body>
+</html>
