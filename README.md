@@ -1,14 +1,17 @@
 # settle
 
-A scroll-driven algorithm visualizer where sorting and pathfinding
-crystallize in place as you scroll. Vanilla JS, zero dependencies.
+**A scroll-driven algorithm visualizer where sorting and pathfinding crystallize in place as you scroll.**
 
-As you scroll, nine algorithms crystallize in place — unsorted values
-heating to amber, swapping hot, and cooling into a settled quartz layer.
-Sorting first, then pathfinding, all narrated as a scroll-driven film in
-vanilla JavaScript, HTML, and CSS. Zero dependencies.
+Vanilla JS · Zero dependencies · CSS-native scroll animations
 
+<br>
 
+### 🎬 [Click here to experience the live demo →](https://settle-candavere.vercel.app)
+
+<br>
+
+As you scroll, nine algorithms crystallize in place — unsorted values heat to amber, swap hot, and cool into a settled quartz layer. Sorting first, then pathfinding, narrated as a single continuous film. No timers. No step buttons. Just scroll.
+---
 ## What it is
 
 settle presents two things — sorting and pathfinding — the way a geode
