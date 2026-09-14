@@ -1,14 +1,14 @@
 {
-  "name": "sortviz",
+  "name": "settle",
   "version": "1.0.0",
-  "description": "Watch sorting and pathfinding algorithms come to life with real-time animations.",
+  "description": "Scroll-driven algorithm visualizer for sorting and pathfinding. Vanilla JS, zero runtime dependencies, CSS-native scroll animations.",
   "main": "narrative.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
     "playwright": "^1.63.0"
