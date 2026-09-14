@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 
-const FILE = 'file:///Users/amarmehta/Documents/sortviz/index.html';
+const FILE = 'file:///Users/amarmehta/Documents/settle/index.html';
 let failures = 0;
 
 function check(label, ok, detail = '') {

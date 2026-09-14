@@ -4,7 +4,7 @@
    final state. No dashboard, no toggle. */
 const { chromium } = require('playwright');
 
-const FILE = 'file:///Users/amarmehta/Documents/sortviz/index.html';
+const FILE = 'file:///Users/amarmehta/Documents/settle/index.html';
 let failures = 0;
 
 function check(label, ok, detail = '') {
@@ -48,8 +48,10 @@ function check(label, ok, detail = '') {
                 bfsCells: document.querySelectorAll('#bfs-field .path-cell').length,
                 bfsVisited: document.querySelectorAll('#bfs-field .path-cell--visited').length,
                 astarPath: document.querySelectorAll('#astar-field .path-cell--path').length,
+                dfsCells: document.querySelectorAll('#dfs-field .path-cell').length,
                 dfsPath: document.querySelectorAll('#dfs-field .path-cell--path').length,
                 dfsVisited: document.querySelectorAll('#dfs-field .path-cell--visited').length,
+                dijkstraCells: document.querySelectorAll('#dijkstra-field .path-cell').length,
                 dijkstraPath: document.querySelectorAll('#dijkstra-field .path-cell--path').length,
                 dijkstraVisited: document.querySelectorAll('#dijkstra-field .path-cell--visited').length,
             };
@@ -71,10 +73,10 @@ function check(label, ok, detail = '') {
             check('bfs grid built', s.bfsCells === 400, String(s.bfsCells));
             check('bfs visited wave drawn', s.bfsVisited > 0, String(s.bfsVisited));
             check('astar path drawn', s.astarPath === 37, String(s.astarPath));
-            check('dfs grid built', document.querySelectorAll('#dfs-field .path-cell').length === 400, String(document.querySelectorAll('#dfs-field .path-cell').length));
+            check('dfs grid built', s.dfsCells === 400, String(s.dfsCells));
             check('dfs visited drawn', s.dfsVisited > 0, String(s.dfsVisited));
             check('dfs path drawn', s.dfsPath > 0, String(s.dfsPath));
-            check('dijkstra grid built', document.querySelectorAll('#dijkstra-field .path-cell').length === 400, String(document.querySelectorAll('#dijkstra-field .path-cell').length));
+            check('dijkstra grid built', s.dijkstraCells === 400, String(s.dijkstraCells));
             check('dijkstra visited drawn', s.dijkstraVisited > 0, String(s.dijkstraVisited));
             check('dijkstra path drawn', s.dijkstraPath > 0, String(s.dijkstraPath));
         } else {

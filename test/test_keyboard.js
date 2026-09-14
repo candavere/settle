@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
   page.on('console', msg => console.log('CONSOLE:', msg.text()));
   page.on('pageerror', err => console.log('ERROR:', err.message));
   
-  await page.goto('file:///Users/amarmehta/Documents/sortviz/index.html', { waitUntil: 'networkidle' });
+  await page.goto('file:///Users/amarmehta/Documents/settle/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(2000);
   
   // Scroll to merge section

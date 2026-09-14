@@ -1,8 +1,9 @@
-# SortViz
+# settle
 
-Every algorithm leaves a fossil.
+A scroll-driven algorithm visualizer where sorting and pathfinding
+crystallize in place as you scroll. Vanilla JS, zero dependencies.
 
-As you scroll, seven algorithms crystallize in place — unsorted values
+As you scroll, nine algorithms crystallize in place — unsorted values
 heating to amber, swapping hot, and cooling into a settled quartz layer.
 Sorting first, then pathfinding, all narrated as a scroll-driven film in
 vanilla JavaScript, HTML, and CSS. Zero dependencies.
@@ -11,7 +12,7 @@ vanilla JavaScript, HTML, and CSS. Zero dependencies.
 
 ## What it is
 
-SortViz presents two things — sorting and pathfinding — the way a geode
+settle presents two things — sorting and pathfinding — the way a geode
 presents rock: raw on the outside, order underneath. The visual system is
 built on that metaphor. Raw, unsettled data is shale. A compare
 interrupting a scan is amber. A swap in flight is hot amber with a lifted
@@ -27,7 +28,8 @@ runs down a single scroll:
   swap, and settle states;
 - **Act II** — merge and quick sort, with the overwrite and pivot
   mechanics drawn explicitly;
-- **Act III** — BFS and A* against the same maze, wavefront against tilt;
+- **Act III** — BFS, Dijkstra, A*, and DFS against the same maze —
+  wavefront, cheapest ring, guided tilt, and a deep dive;
 - a **footer** where six veins converge into stillness — the geode is
   done forming.
 
@@ -63,18 +65,30 @@ visually honest.
 
 ### Pathfinding — Act III
 
-BFS and A* face the same 20×20 comb maze and the same corners,
+Four searches face the same 20×20 comb maze and the same corners,
 sequentially, in the same section rhythm that the sorts use.
 
 BFS floods the whole grid — a bone-white halo pulses ring by ring and the
 wavefront proof of the shortest path is drawn amber from start to end.
 
+Dijkstra expands the cheapest unvisited cell every step. Every move costs
+one on this unweighted grid, so distance grows in rings and it reaches
+the goal the same way BFS does — the same 323 cells, the same shortest
+path. The section says plainly what is true: with nothing to weigh,
+Dijkstra reduces to BFS.
+
 A* presents the same maze so the comparison is fair: the frontier visibly
 *leans* toward the goal (a tilt motif drawn across the grid), dead-end
 pockets stay closed, and the narration says what is true on this layout —
 "A* opens a third fewer cells" (206 vs. BFS's 323) — and then draws the
-*same* shortest path home. The amber path draw is the payoff in both
-sections.
+*same* shortest path home.
+
+DFS dives deep down one branch before it ever backtracks — a stack, not a
+queue. On this maze it finds a route quickly but not a short one: a
+190-step wander versus BFS's guaranteed 38. That is the honest gap the
+narration admits: DFS finds *a* path, never the pledge of the shortest.
+
+The amber path draw is the payoff in every section.
 
 ![A* — the frontier tilts toward the goal and prunes whole pockets](assets/path-astar.png)
 
@@ -157,7 +171,7 @@ file, one `<script>` tag, and one entry in the algorithm table in
 ## How to run
 
 ```bash
-git clone <your-sortviz-repo-url> && cd sortviz
+git clone https://github.com/candavere/settle.git && cd settle
 open index.html
 ```
 

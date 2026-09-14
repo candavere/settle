@@ -16,7 +16,7 @@ Primary audience is technical evaluators — recruiters and engineers reviewing 
 
 ## Product Purpose
 
-SortViz is a browser-based algorithm visualizer that animates sorting and pathfinding algorithms in real time, ahead of any implementation. It demonstrates algorithms, data structures, DOM manipulation, and clean code organization. Success means a viewer can understand *what* an algorithm does by watching it run and *how well it was built* by reading the code.
+settle is a browser-based algorithm visualizer that animates sorting and pathfinding algorithms in real time, ahead of any implementation. It demonstrates algorithms, data structures, DOM manipulation, and clean code organization. Success means a viewer can understand *what* an algorithm does by watching it run and *how well it was built* by reading the code.
 
 ## Positioning
 
@@ -38,9 +38,9 @@ Used in a browser on real data the user controls: 10–100 element arrays across
 
 ## Brand Commitments
 
-- Name: SortViz. (SPEC.md)
+- Name: settle. (SPEC.md)
 - Dark theme with color-coded algorithm states is a binding visual constraint (SPEC.md): sort bars default red, comparing yellow, swapping light red, sorted green; pathfinding cells wall gray, visited blue, path yellow. Recorded because SPEC.md commits to it; no further aesthetic commitments exist (user confirmed).
-- README hook: "Watch sorting and pathfinding algorithms come to life with real-time animations." (SPEC.md)
+- README hook: "A scroll-driven algorithm visualizer where sorting and pathfinding crystallize in place as you scroll. Vanilla JS, zero dependencies." (SPEC.md)
 
 ## Evidence on Hand
 

@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 
-const FILE = 'file:///Users/amarmehta/Documents/sortviz/index.html';
+const FILE = 'file:///Users/amarmehta/Documents/settle/index.html';
 let failures = 0;
 
 function check(label, ok, detail = '') {
@@ -61,8 +61,8 @@ function check(label, ok, detail = '') {
     check('sub present', footer.hasSub);
     check('status present', footer.hasStatus);
     check('1 footer link (GitHub)', footer.links === 1, footer.linkTexts.join(','));
-    check('GitHub link points to candavere/sortviz',
-        footer.linkHref === 'https://github.com/candavere/sortviz', String(footer.linkHref));
+    check('GitHub link points to candavere/settle',
+        footer.linkHref === 'https://github.com/candavere/settle', String(footer.linkHref));
     check('footer on shell background', footer.footerBg === 'rgb(13, 12, 11)', footer.footerBg);
     check('stage is sticky (scroll room)', footer.stagePosition === 'sticky', footer.stagePosition);
     check('footer has 260vh scroll room', footer.sectionHeight === '2340px', footer.sectionHeight);
