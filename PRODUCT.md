@@ -10,10 +10,6 @@ web
 
 Static HTML/CSS + vanilla JavaScript (ES6+), no frameworks, no build tools, no external dependencies. Decided in SPEC.md for a student portfolio project.
 
-## Users
-
-Primary audience is technical evaluators — recruiters and engineers reviewing the author's student portfolio (inferred from user confirmation in the init interview). Their job is to quickly assess the author's algorithm knowledge, code organization, and architecture decisions.
-
 ## Product Purpose
 
 settle is a browser-based algorithm visualizer that animates sorting and pathfinding algorithms in real time, ahead of any implementation. It demonstrates algorithms, data structures, DOM manipulation, and clean code organization. Success means a viewer can understand *what* an algorithm does by watching it run and *how well it was built* by reading the code.
