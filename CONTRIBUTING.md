@@ -31,4 +31,7 @@ Match the existing pure-function contract: input in, step array out
 
 - Chromium-only flagship experience; Firefox uses a static fallback.
 - No automated test for an already-sorted input on the sort sections.
-- DFS and Dijkstra exist in the codebase but are not in the narrative.
+- All four pathfinding sections run on the same fixed 20×20 comb maze;
+  there is no way to swap in a different layout.
+- The static fallback (reduced motion / no scroll-timeline support)
+  renders each stage's settled end state, not a step-through.
