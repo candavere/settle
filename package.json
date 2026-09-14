@@ -4,7 +4,7 @@
   "description": "Scroll-driven algorithm visualizer for sorting and pathfinding. Vanilla JS, zero runtime dependencies, CSS-native scroll animations.",
   "main": "narrative.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/run-all.js"
   },
   "keywords": [],
   "author": "",

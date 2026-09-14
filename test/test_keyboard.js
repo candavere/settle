@@ -1,4 +1,7 @@
 const { chromium } = require('playwright');
+const { pathToFileURL } = require('node:url');
+const path = require('path');
+const FILE = pathToFileURL(path.join(__dirname, '..', 'index.html')).href;
 
 (async () => {
   const browser = await chromium.launch({ headless: true });
@@ -7,7 +10,7 @@ const { chromium } = require('playwright');
   page.on('console', msg => console.log('CONSOLE:', msg.text()));
   page.on('pageerror', err => console.log('ERROR:', err.message));
   
-  await page.goto('file:///Users/amarmehta/Documents/settle/index.html', { waitUntil: 'networkidle' });
+  await page.goto(FILE, { waitUntil: 'networkidle' });
   await page.waitForTimeout(2000);
   
   // Scroll to merge section

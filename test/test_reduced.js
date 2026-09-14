@@ -4,7 +4,9 @@
    final state. No dashboard, no toggle. */
 const { chromium } = require('playwright');
 
-const FILE = 'file:///Users/amarmehta/Documents/settle/index.html';
+const { pathToFileURL } = require('node:url');
+const path = require('path');
+const FILE = pathToFileURL(path.join(__dirname, '..', 'index.html')).href;
 let failures = 0;
 
 function check(label, ok, detail = '') {
