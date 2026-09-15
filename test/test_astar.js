@@ -107,7 +107,7 @@ function check(label, ok, detail = '') {
     check('rule count = stateful cells + 1 tilt (path-not-popped cells keyframed too)',
         css.ruleCount === css.statefulCellCount + 1,
         `rules=${css.ruleCount} stateful=${css.statefulCellCount}`);
-    check('visited cell animation bound', css.cell0Anim.startsWith('path-cell-'), css.cell0Anim);
+    check('visited cell animation bound', css.cell0Anim.startsWith('astar-path-cell-'), css.cell0Anim);
     check('tilt animation bound', css.tiltAnim === 'astar-tilt-move', css.tiltAnim);
 
     // Correctness: A* path is valid, explores fewer cells than BFS would

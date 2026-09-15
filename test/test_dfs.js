@@ -100,7 +100,7 @@ function check(label, ok, detail = '') {
     check('rule count = stateful cells (no overlay)',
         css.ruleCount === css.statefulCellCount,
         `rules=${css.ruleCount} stateful=${css.statefulCellCount}`);
-    check('visited cell animation bound', css.cell0Anim.startsWith('path-cell-'), css.cell0Anim);
+    check('visited cell animation bound', css.cell0Anim.startsWith('dfs-path-cell-'), css.cell0Anim);
 
     // Correctness: DFS finds a valid path but not the shortest one
     const correctness = await page.evaluate(() => {

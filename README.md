@@ -11,7 +11,6 @@ Vanilla JS · Zero dependencies · CSS-native scroll animations
 
 <br>
 
-As you scroll, nine algorithms crystallize in place — unsorted values heat to amber, swap hot, and cool into a settled quartz layer. Sorting first, then pathfinding, narrated as a single continuous film. No timers. No step buttons. Just scroll.
 ---
 ## What it is
 
@@ -31,8 +30,8 @@ runs down a single scroll:
   swap, and settle states;
 - **Act II** — merge and quick sort, with the overwrite and pivot
   mechanics drawn explicitly;
-- **Act III** — BFS, Dijkstra, A*, and DFS against the same maze —
-  wavefront, cheapest ring, guided tilt, and a deep dive;
+- **Act III** — BFS, A*, DFS, and Dijkstra against the same maze —
+  wavefront, guided tilt, deep dive, and the cheapest ring;
 - a **footer** where six veins converge into stillness — the geode is
   done forming.
 
@@ -109,8 +108,10 @@ comparisons demand layouts where the heuristic matters.
 
 ### CSS-native scroll-driven animation, with a fallback that isn't a lie
 
-The whole page is `animation-timeline: view()` and `animation-range`,
-wrapped in `@supports`. The animated experience treats scroll position as
+The narrative is driven entirely by CSS-native scroll timelines —
+`scroll(root)` for the shard fields, path cells, and narration steps;
+`view()` for the footer — gated behind a `@supports`/`CSS.supports`
+check. The animated experience treats scroll position as
 the timeline, so there's no timer orchestration anywhere in the narrative
 — you scrub backward and the algorithm un-runs. Browsers without scroll
 timeline support get the same narrative as a static, readable page: every
@@ -163,9 +164,14 @@ Algorithms don't know a browser exists.
 
 The four sorting step shapes — `compare`, `swap`, `overwrite`, `sorted` —
 are the entire language the five sort sections speak; merge's
-`overwrite` is how the animation stays honest. Adding an algorithm is one
-file, one `<script>` tag, and one entry in the algorithm table in
-`narrative.js` — the contract stays the same either way.
+`overwrite` is how the animation stays honest. Extending the narrative is
+a fixed ritual, not one line: a new pure function file, a `<section>`
+block plus `<script>` tag in `index.html`, and in `narrative.js` a name in
+`getAlgorithmFunction`'s lists, a narration block in
+`generateNarrationSteps()`, and a setup call in `initializeNarrative()`
+(sorts also add a `STATIC_SHARD_FIELDS` entry for the static fallback) —
+plus a test suite under `test/`. The step contract stays the same either
+way.
 
 ## How to run
 

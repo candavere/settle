@@ -1398,7 +1398,12 @@ function buildPathGrid(field, walls, start, end) {
     }
 }
 
-function generatePathCellKeyframes(cells, visited, path) {
+/* Keyframes are namespaced per algorithm (bfs-path-cell-*, dfs-path-cell-*,
+   ...) so the four pathfinding sections each bind to their own rules. CSS
+   resolves duplicate @keyframes names to the last declaration in document
+   order, so an un-prefixed name would let the last-built algorithm's wave
+   override every other section's animation. */
+function generatePathCellKeyframes(cells, visited, path, prefix) {
     const vLen = visited.length;
     const pLen = path.length;
     const visitIdx = new Map(visited.map((node, i) => [`${node.r},${node.c}`, i]));
@@ -1429,7 +1434,7 @@ function generatePathCellKeyframes(cells, visited, path) {
         const key = `${cell.dataset.r},${cell.dataset.c}`;
         if (!phases.has(key)) return; /* unreached cells stay base */
         const { v, p } = phaseForKey(key);
-        const name = `path-cell-${cell.dataset.r}-${cell.dataset.c}`;
+        const name = `${prefix}-path-cell-${cell.dataset.r}-${cell.dataset.c}`;
         const visitP = v >= 0 ? visitPhase(v) : visitPhase(p); /* discovered-not-popped proxy */
         if (p >= 0) {
             css += `@keyframes ${name} { ` +
@@ -1447,8 +1452,8 @@ function generatePathCellKeyframes(cells, visited, path) {
     return css;
 }
 
-function bindPathCell(cell, range) {
-    cell.style.animation = `path-cell-${cell.dataset.r}-${cell.dataset.c} auto linear`;
+function bindPathCell(cell, range, prefix) {
+    cell.style.animation = `${prefix}-path-cell-${cell.dataset.r}-${cell.dataset.c} auto linear`;
     cell.style.animationTimeline = 'scroll(root)';
     if (range) cell.style.animationRange = range;
     cell.style.animationFillMode = 'both';
@@ -1527,7 +1532,7 @@ function setupPathfindingGrid(sectionId, algorithm) {
         }
     });
 
-    const cellCss = generatePathCellKeyframes(field.children, result.visited, result.path);
+    const cellCss = generatePathCellKeyframes(field.children, result.visited, result.path, algorithm);
     let overlayCss = '';
     let overlay = null;
     let overlayName = '';
@@ -1567,7 +1572,7 @@ function setupPathfindingGrid(sectionId, algorithm) {
     const range = buildScrollRange(section);
     const rangeStr = range && range.full;
     Array.from(field.children).forEach(cell => {
-        if (cell.classList.contains('path-cell--visited')) bindPathCell(cell, rangeStr);
+        if (cell.classList.contains('path-cell--visited')) bindPathCell(cell, rangeStr, algorithm);
     });
     if (overlay) bindActOverlay(overlay, overlayName, rangeStr);
 }
@@ -1814,7 +1819,7 @@ function playbackTargets(spec) {
     Array.from(spec.field.children).forEach((el, i) => {
         targets.push([el, spec.dynamic === 'sort'
             ? `${spec.algorithm}-shard-${i}`
-            : `path-cell-${el.dataset.r}-${el.dataset.c}`]);
+            : `${spec.algorithm}-path-cell-${el.dataset.r}-${el.dataset.c}`]);
     });
     (spec.overlays || []).forEach(ov => {
         const el = document.getElementById(ov.id);

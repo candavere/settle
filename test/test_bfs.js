@@ -106,7 +106,7 @@ function check(label, ok, detail = '') {
     check('rule count = stateful cells + 1 halo (path-not-popped cells keyframed too)',
         css.ruleCount === css.statefulCellCount + 1,
         `rules=${css.ruleCount} stateful=${css.statefulCellCount}`);
-    check('visited cell animation bound', css.cell0Anim.startsWith('path-cell-'), css.cell0Anim);
+    check('visited cell animation bound', css.cell0Anim.startsWith('bfs-path-cell-'), css.cell0Anim);
     check('halo animation bound', css.haloAnim === 'bfs-halo-pulse', css.haloAnim);
 
     // Correctness: path array is valid from start to end

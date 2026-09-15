@@ -100,7 +100,7 @@ function check(label, ok, detail = '') {
     check('rule count = stateful cells (no overlay)',
         css.ruleCount === css.statefulCellCount,
         `rules=${css.ruleCount} stateful=${css.statefulCellCount}`);
-    check('visited cell animation bound', css.cell0Anim.startsWith('path-cell-'), css.cell0Anim);
+    check('visited cell animation bound', css.cell0Anim.startsWith('dijkstra-path-cell-'), css.cell0Anim);
 
     // Correctness: on an unweighted grid Dijkstra reduces to BFS
     const correctness = await page.evaluate(() => {
