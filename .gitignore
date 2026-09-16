@@ -26,6 +26,7 @@ test-results/
 # Progress Files
 progress_log.md
 progress_queue.md
+diag_*.js
 
 # Direction files
 SPEC.md

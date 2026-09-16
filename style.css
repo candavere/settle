@@ -611,7 +611,7 @@ body {
     position: relative;
     transform-origin: bottom center;
     background: linear-gradient(to top, #262019, #4a4033);
-    clip-path: polygon(0 100%, 0 42%, 100% 10%, 100% 100%);
+    clip-path: polygon(0 100%, 0 4%, 100% 4%, 100% 100%);
 }
 
 .bubble-shard::after,
@@ -1320,7 +1320,7 @@ body {
 .shard-field--static-settled .merge-shard,
 .shard-field--static-settled .quick-shard {
     background: linear-gradient(to top, #333a38, #5a655f);
-    clip-path: polygon(0 100%, 0 8%, 100% 2%, 100% 100%);
+    clip-path: polygon(0 100%, 0 4%, 100% 4%, 100% 100%);
 }
 
 /* Reduced Motion Fallback */

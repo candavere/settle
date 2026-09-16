@@ -218,10 +218,14 @@ function pct(value) {
    never read from one channel alone. */
 const ACTI_STATE = {
     bevel: {
-        base: 'polygon(0 100%, 0 42%, 100% 10%, 100% 100%)',
-        compare: 'polygon(0 100%, 0 30%, 100% 5%, 100% 100%)',
-        swap: 'polygon(0 100%, 0 22%, 100% 0%, 100% 100%)',
-        settled: 'polygon(0 100%, 0 8%, 100% 2%, 100% 100%)',
+        /* Symmetric bevel: both top corners trimmed by the same %, so every
+           bar's top edge is level left-to-right. All states share one value
+           so the visible top of any bar terminates at the same horizontal
+           line for the same value in any state. */
+        base: 'polygon(0 100%, 0 4%, 100% 4%, 100% 100%)',
+        compare: 'polygon(0 100%, 0 4%, 100% 4%, 100% 100%)',
+        swap: 'polygon(0 100%, 0 4%, 100% 4%, 100% 100%)',
+        settled: 'polygon(0 100%, 0 4%, 100% 4%, 100% 100%)',
     },
     bg: {
         base: 'linear-gradient(to top, #262019, #4a4033)',
@@ -253,6 +257,9 @@ function buildActIShardField(field, array, shardClass) {
     array.forEach(value => {
         const bar = document.createElement('i');
         bar.className = shardClass;
+        /* Height is value/max directly: the symmetric bevel trims both top
+           corners equally, so no oversize compensation is needed and the
+           painted top lands on the value line the section narrates. */
         bar.style.height = `${(value / maxVal) * 100}%`;
         field.appendChild(bar);
     });
@@ -413,16 +420,36 @@ function setupBubbleSortAnimations() {
 
 /* The scroll-fraction range for a section: the animation plays from the
    moment the section's top enters the viewport bottom (secTop - V) to the
-   moment the section's bottom reaches the viewport bottom (secTop + 2V),
-   so the array is fully sorted right when the section leaves the viewport. */
+   moment the section's bottom reaches the viewport bottom
+   (secTop + secH - V, measured from the real laid-out height so the
+   collapsed ≤1024px sections animate across their full height),
+   so the array is fully sorted right when the section leaves the viewport.
+
+   On the collapsed (≤1024px) layout .section-inner is not sticky, so a
+   sorting section's field scrolls off the top of the viewport before the
+   section bottom reaches it. There the range ends the moment the field's
+   top reaches the viewport top (fieldTop === 0) — the last frame where the
+   field is still fully visible — so the settled array is what the user sees
+   as the field leaves. Desktop's sticky .section-inner keeps the field on
+   screen through the whole range, so it keeps the section-exit end. */
 function buildScrollRange(sectionEl) {
     const rect = sectionEl.getBoundingClientRect();
     const secTop = rect.top + window.scrollY;
     const V = window.innerHeight;
     const maxScroll = document.documentElement.scrollHeight - V;
     if (maxScroll <= 0) return null;
+    const secH = rect.height;
     const start = Math.max(0, (secTop - V)) / maxScroll;
-    const end = Math.min(1, (secTop + 2 * V) / maxScroll);
+
+    let endScrollY = secTop + secH - V;
+    const field = sectionEl.querySelector('.shard-field');
+    const collapsed = window.matchMedia('(max-width: 1024px)').matches;
+    if (collapsed && field) {
+        const fieldTopDoc = field.getBoundingClientRect().top + window.scrollY;
+        endScrollY = Math.min(endScrollY, fieldTopDoc);
+    }
+
+    const end = Math.min(1, endScrollY / maxScroll);
     if (end - start < 0.001) return null;
     return {
         full: `${(start * 100).toFixed(4)}% ${(end * 100).toFixed(4)}%`,
@@ -1695,6 +1722,29 @@ function applyStaticFallback() {
     setupNarrationKeyboardNav();
 }
 
+/* The collapsed (≤1024px) sections report a taller height at
+   DOMContentLoaded than after the embedded fonts rasterize, so a range
+   baked during setup lands a few px late. Recompute every section range
+   once fonts settle and re-bind, so the array finishes sorting exactly as
+   the section bottom reaches the viewport bottom on all layouts. */
+function rebindScrollRanges() {
+    if (!NarrativeState.scrollSupported || !NarrativeState.initialized) return;
+
+    document.querySelectorAll('.algorithm-section').forEach(section => {
+        const range = buildScrollRange(section);
+        if (!range) return;
+        section.querySelectorAll('[style*="scroll(root)"]').forEach(el => {
+            if (el.classList.contains('narration-step')) {
+                const steps = el.parentElement.querySelectorAll('.narration-step');
+                const index = Array.prototype.indexOf.call(steps, el);
+                el.style.animationRange = range.step(index, steps.length);
+            } else {
+                el.style.animationRange = range.full;
+            }
+        });
+    });
+}
+
 function initializeNarrative() {
     if (NarrativeState.initialized) return;
 
@@ -1736,6 +1786,24 @@ function initializeNarrative() {
     setupNarrationKeyboardNav();
 
     NarrativeState.initialized = true;
+
+    /* Re-measure ranges once fonts settle (collapsed sections shrink ~10px
+       after the embedded fonts rasterize; on desktop secH is fixed at 3V so
+       the recomputed range is unchanged there). */
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+            requestAnimationFrame(() => rebindScrollRanges());
+        });
+    }
+
+    /* The collapsed/desktop range math depends on breakpoint and viewport
+       height, so re-bind on resize too (debounced to one frame). */
+    let resizeRaf = 0;
+    window.addEventListener('resize', () => {
+        if (!NarrativeState.initialized) return;
+        cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(() => rebindScrollRanges());
+    });
 }
 
 function setupNarrationKeyboardNav() {
